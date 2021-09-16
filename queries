@@ -1,0 +1,18 @@
+select employee_id, last_name, hire_date from employees where hire_date>'1996-01-31';
+select employee_id, first_name from employees where first_name like 'R%' or first_name like 'S%';
+select employee_id, last_name, manager_id from employees where manager_id=200 or manager_id=201;
+select employee_id, last_name, job_id, salary from employees where (job_id like '%REP%' or job_id like '%MAN%') and salary>6000;
+select employee_id, last_name, job_id, salary from employees order by salary desc;
+select employee_id,replace(last_name,last_name,'Joe'), job_id from employees where last_name='Landry';
+select employee_id,instr(lower(last_name),'o') from employees;
+select concat('2020_B84',last_name), department_id from employees where department_id=90;
+select sysdate();
+select avg(commission_pct) from employees where commission_pct >= 0;
+select avg(salary), max(salary), department_id from employees group by department_id having department_id >=80 and department_id<=100;
+select distinct(department_id) from employees where salary>1000;
+select department_id,max(sal) from (select avg(salary) sal, department_id from employees group by department_id)as d;
+select department_name, location_id from departments d inner join employees e on last_name='Ernst' and e.department_id=d.department_id;
+select e.first_name, e.last_name from employees e where department_id=(select d.department_id from departments d inner join locations l
+on l.location_id=d.location_id where l.city='Tokyo');
+select first_name, last_name from employees where salary=(select max(salary) from employees);
+select first_name, last_name, e.job_id, j.job_title from employees e left outer join jobs j on j.job_id=e.job_id
